@@ -8,7 +8,7 @@ CXXFLAGS = -std=c++17 -Wall -Wextra -g
 TARGET = game
 
 # Sources et objets
-SRCS = main.cpp board.cpp neurone.cpp network.cpp networkOperation.cpp trainer.cpp
+SRCS = $(wildcard *.cpp) $(wildcard Network/*.cpp)
 OBJS = $(SRCS:.cpp=.o)
 
 # Règle par défaut

@@ -1,5 +1,5 @@
-#include "networkControl.h"
-#include "network.h"
+#include "Network/networkControl.h"
+#include "Network/network.h"
 #include "board.h"
 #include "trainer.h"
 #include <algorithm>
@@ -81,8 +81,8 @@ Network trainer::train()
                 population[rand() % population.size()]));
         for (int i = 0; i < 50; i++)
             population.push_back(NetworkOperation::Crossover(
-                population[rand() % 50],
-                population[rand() % 50]));
+                population[rand() % population.size()],
+                population[rand() % population.size()]));
     }
     return population[0];
 }

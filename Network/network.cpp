@@ -1,6 +1,7 @@
 #include "network.h"
 #include "networkControl.h"
 #include <cmath>
+#include <cassert>
 
 static float Activation(float value)
 {
@@ -9,11 +10,12 @@ static float Activation(float value)
 
 static void FeedForwardOne(Layer& prevLayer, Layer& currentLayer)
 {
+    assert(prevLayer.values.size() == currentLayer.weights[0].size());
+
     for (size_t neuroneIndex = 0; neuroneIndex < currentLayer.values.size(); neuroneIndex++)
     {
         currentLayer.values[neuroneIndex] = 0.0f;
         for (size_t prevNeuroneIndex = 0; prevNeuroneIndex < prevLayer.values.size(); prevNeuroneIndex++)
-        
             currentLayer.values[neuroneIndex] += currentLayer.weights[neuroneIndex][prevNeuroneIndex] * prevLayer.values[prevNeuroneIndex];
 
         currentLayer.values[neuroneIndex] += currentLayer.bias[neuroneIndex];
@@ -47,7 +49,14 @@ int Network::FeedForward(Board& board, Color iaColor)
         }
     }
 
-    
+    std::cout << "inputLayer: values=" << inputLayer.values.size() << std::endl;
+    std::cout << "hiddenLayer1: values=" << hiddenLayer1.values.size() 
+            << ", weights[0]=" << hiddenLayer1.weights[0].size() << std::endl;
+    std::cout << "hiddenLayer2: values=" << hiddenLayer2.values.size() 
+            << ", weights[0]=" << hiddenLayer2.weights[0].size() << std::endl;
+    std::cout << "outputLayer: values=" << outputLayer.values.size() 
+            << ", weights[0]=" << outputLayer.weights[0].size() << std::endl << std::endl;
+
     FeedForwardOne(inputLayer, hiddenLayer1);
     FeedForwardOne(hiddenLayer1, hiddenLayer2);
     FeedForwardOne(hiddenLayer2, outputLayer);

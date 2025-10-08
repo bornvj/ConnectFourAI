@@ -4,7 +4,7 @@
 #include <ctime>  
 #include "colors.h"
 #include "board.h"
-#include "network.h"
+#include "Network/network.h"
 #include "trainer.h"
 using namespace std;
 

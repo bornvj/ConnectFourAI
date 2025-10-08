@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 #include "neurone.h"
-#include "board.h"
+#include "../board.h"
 #include "layer.h"
 #include "network.h"
 
