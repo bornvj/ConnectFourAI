@@ -61,7 +61,7 @@ void Board::Print()
         cout << '\n' << "---------------" << '\n';
     }
     
-    cout << " 0 1 2 3 4 5 6\n\n\n";
+    cout << " 0 1 2 3 4 5 6\n\n";
 }
 
 Color Board::IsFinished()

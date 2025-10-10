@@ -2,7 +2,7 @@
 
 #define POPSIZE             400 
 #define NBRITERATIONS       500
-#define NBRBATTLES          15
+#define NBRBATTLES          25
 
 #define INPUTLAYERSIZE      (NB_COL * NB_ROW)
 #define HIDDENLAYER1SIZE    64
@@ -11,3 +11,5 @@
 
 #define MUTATEPROB          0.3f
 #define MUTATEDELTA         0.4f
+
+#define DEBBUG              false

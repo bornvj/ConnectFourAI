@@ -32,4 +32,19 @@ class Layer
                 values[i] = 0.0f;
             }
         } 
+
+    Layer(const Layer& layer) :
+        weights(layer.weights),
+        bias(layer.bias),
+        values(layer.values)
+    {}
+
+    Layer& operator=(const Layer& other) {
+        if (this != &other) {
+            weights = other.weights;
+            bias = other.bias;
+            values = other.values;
+        }
+        return *this;
+    }
 };

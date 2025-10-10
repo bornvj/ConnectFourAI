@@ -15,6 +15,8 @@ class Network
         long victories;
 
         Network();
+        Network(const Network& n);
+        Network& operator=(const Network& n);
 
         int FeedForward(Board& board, Color iaColor);
 };

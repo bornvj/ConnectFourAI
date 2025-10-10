@@ -1,7 +1,9 @@
-#include "network.h"
-#include "networkControl.h"
 #include <cmath>
 #include <cassert>
+
+#include "network.h"
+#include "networkControl.h"
+
 
 static float Activation(float value)
 {
@@ -31,6 +33,27 @@ Network::Network() : inputLayer(0, INPUTLAYERSIZE),
     victories = 0;
 }
 
+Network::Network(const Network& n) : 
+    inputLayer(Layer(n.inputLayer)),
+    hiddenLayer1(Layer(n.hiddenLayer1)),
+    hiddenLayer2(Layer(n.hiddenLayer2)),
+    outputLayer(Layer(n.outputLayer)),
+    victories(n.victories)
+{
+}
+
+Network& Network::operator=(const Network& n)
+{
+    if (this != &n) {
+        inputLayer = n.inputLayer;
+        hiddenLayer1 = n.hiddenLayer1;
+        hiddenLayer2 = n.hiddenLayer2;
+        outputLayer = n.outputLayer;
+        victories = n.victories;
+    }
+    return *this;
+}
+
 int Network::FeedForward(Board& board, Color iaColor)
 {
     int index = 0;
@@ -49,6 +72,8 @@ int Network::FeedForward(Board& board, Color iaColor)
         }
     }
 
+    if (DEBBUG)
+    {
     std::cout << "inputLayer: values=" << inputLayer.values.size() << std::endl;
     std::cout << "hiddenLayer1: values=" << hiddenLayer1.values.size() 
             << ", weights[0]=" << hiddenLayer1.weights[0].size() << std::endl;
@@ -56,6 +81,7 @@ int Network::FeedForward(Board& board, Color iaColor)
             << ", weights[0]=" << hiddenLayer2.weights[0].size() << std::endl;
     std::cout << "outputLayer: values=" << outputLayer.values.size() 
             << ", weights[0]=" << outputLayer.weights[0].size() << std::endl << std::endl;
+    }
 
     FeedForwardOne(inputLayer, hiddenLayer1);
     FeedForwardOne(hiddenLayer1, hiddenLayer2);

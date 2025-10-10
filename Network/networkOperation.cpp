@@ -35,7 +35,7 @@ void crossoverLayer(Layer& newLayer, const Layer& l1, const Layer& l2)
 
 Network NetworkOperation::Mutate(const Network& network)
 {
-    Network newNetwork = network;
+    Network newNetwork = Network(network);
 
     mutateLayer(newNetwork.hiddenLayer1);
     mutateLayer(newNetwork.hiddenLayer2);
@@ -46,7 +46,7 @@ Network NetworkOperation::Mutate(const Network& network)
 
 Network NetworkOperation::Crossover(const Network& n1, const Network& n2)
 {
-    Network newNetwork = n1;
+    Network newNetwork = Network(n1);
 
     crossoverLayer(newNetwork.hiddenLayer1, n1.hiddenLayer1, n2.hiddenLayer1);
     crossoverLayer(newNetwork.hiddenLayer2, n1.hiddenLayer2, n2.hiddenLayer2);

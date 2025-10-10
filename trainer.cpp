@@ -34,16 +34,16 @@ Network trainer::train()
 {
     std::vector<Network> population(POPSIZE);
 
-    for (int iter = 0; iter < NBRITERATIONS; iter++)
+    for (size_t iter = 0; iter < NBRITERATIONS; iter++)
     {
        for (auto& n : population)
             n.victories = 0; // reset victories
 
-        for (int i = 0; i < POPSIZE; i++)
+        for (size_t i = 0; i < population.size(); i++)
         {
-            for (int b = 0; b < NBRBATTLES; b++) 
+            for (size_t b = 0; b < NBRBATTLES; b++) 
             {
-                int j;
+                size_t j;
                 do { j = rand() % POPSIZE; } while (j == i); // éviter de jouer contre soi
                 switch(fightNetworks(population[i], population[j])) 
                 {
@@ -57,32 +57,34 @@ Network trainer::train()
              }
         }
 
-
         std::sort(population.begin(), population.end(),
             [](const Network& a, const Network& b) {
             return a.victories > b.victories;
             });
 
-        std::cout << iter << " itérations [";
-        for (int i = 0; i < 5; i++)
-        {
+        std::cout << iter << " itérations |";
+        for (int i = 0; i < 10; i++)
             std::cout << population[i].victories << " | ";
-        }
 
         std::cout << std::endl;
 
-        population.erase(population.begin() + 50, population.end()); 
+        population.erase(population.begin() + (POPSIZE / 4), population.end()); // garde 1/4
 
-        for (int i = 0; i < 50; i++)
+        for (int i = 0; i < POPSIZE / 4; i++)
             population.push_back(NetworkOperation::Mutate(population[i]));
-        for (int i = 25; i < 75; i++)
+        // 2/4
+        
+        for (int i = 0; i < POPSIZE / 4; i++)
             population.push_back(NetworkOperation::Crossover(
                 population[rand() % population.size()],
                 population[rand() % population.size()]));
-        for (int i = 0; i < 50; i++)
+        // 3/4
+
+        for (int i = 0; i < POPSIZE / 4; i++)
             population.push_back(NetworkOperation::Crossover(
                 population[rand() % population.size()],
                 population[rand() % population.size()]));
+        // 4/4
     }
     return population[0];
 }
