@@ -2,6 +2,7 @@
 *.d
 
 .vscode/
+game
 
 # Compiled Object files
 *.slo

@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <nlohmann/json.hpp>
 #include "neurone.h"
 #include "../board.h"
 #include "layer.h"
@@ -13,12 +14,18 @@ class Network
         Layer hiddenLayer2;
         Layer outputLayer;
         long victories;
+        long gamesPlayed;
 
         Network();
         Network(const Network& n);
+        Network(const std::string& filename);
         Network& operator=(const Network& n);
 
+        void save(const std::string& filename);
+
         int FeedForward(Board& board, Color iaColor);
+
+        float getWinRate();
 };
 
 namespace NetworkOperation

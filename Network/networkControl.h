@@ -1,7 +1,7 @@
 #pragma once
 
 #define POPSIZE             400 
-#define NBRITERATIONS       500
+#define NBRITERATIONS       2
 #define NBRBATTLES          25
 
 #define INPUTLAYERSIZE      (NB_COL * NB_ROW)

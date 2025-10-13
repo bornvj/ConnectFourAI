@@ -9,6 +9,8 @@ class Layer
         std::vector<float> bias;
         std::vector<float> values;
 
+        Layer() = default;
+
         Layer(int prevLayerSize, int layerSize)
         {
             values.resize(layerSize);
@@ -33,18 +35,36 @@ class Layer
             }
         } 
 
-    Layer(const Layer& layer) :
-        weights(layer.weights),
-        bias(layer.bias),
-        values(layer.values)
-    {}
-
-    Layer& operator=(const Layer& other) {
-        if (this != &other) {
-            weights = other.weights;
-            bias = other.bias;
-            values = other.values;
+        Layer(const Layer& layer) :
+            weights(layer.weights),
+            bias(layer.bias),
+            values(layer.values)
+        {
         }
-        return *this;
-    }
+
+        Layer(const nlohmann::json& j)
+        {            
+            for (const nlohmann::json& weight : j.at("weights"))
+                weights.push_back(weight.get<std::vector<float>>());
+
+            bias = j.at("bias").get<std::vector<float>>();
+        }
+
+        Layer& operator=(const Layer& other) 
+        {
+            if (this != &other) {
+                weights = other.weights;
+                bias = other.bias;
+                values = other.values;
+            }
+            return *this;
+        }
+
+        nlohmann::json to_json()
+        {
+            nlohmann::json ret;
+            ret["weights"] = weights;
+            ret["bias"] = bias;
+            return ret;
+        }
 };

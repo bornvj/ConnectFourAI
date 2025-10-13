@@ -1,5 +1,7 @@
 #include <cmath>
 #include <cassert>
+#include <string>
+#include <fstream> 
 
 #include "network.h"
 #include "networkControl.h"
@@ -28,9 +30,10 @@ static void FeedForwardOne(Layer& prevLayer, Layer& currentLayer)
 Network::Network() : inputLayer(0, INPUTLAYERSIZE),
     hiddenLayer1(INPUTLAYERSIZE, HIDDENLAYER1SIZE),
     hiddenLayer2(HIDDENLAYER1SIZE, HIDDENLAYER2SIZE),
-    outputLayer(HIDDENLAYER2SIZE, OUTPUTLAYERSIZE)
+    outputLayer(HIDDENLAYER2SIZE, OUTPUTLAYERSIZE),
+    victories(0),
+    gamesPlayed(0)
 {
-    victories = 0;
 }
 
 Network::Network(const Network& n) : 
@@ -38,8 +41,21 @@ Network::Network(const Network& n) :
     hiddenLayer1(Layer(n.hiddenLayer1)),
     hiddenLayer2(Layer(n.hiddenLayer2)),
     outputLayer(Layer(n.outputLayer)),
-    victories(n.victories)
+    victories(n.victories),
+    gamesPlayed(n.gamesPlayed)
 {
+}
+
+Network::Network(const std::string& filename)
+{
+    nlohmann::json j;
+    std::ifstream file(filename);
+    file >> j;
+
+    inputLayer = Layer(j.at("inputLayer"));
+    hiddenLayer1 = Layer(j.at("hiddenLayer1"));
+    hiddenLayer2 = Layer(j.at("hiddenLayer2"));
+    outputLayer = Layer(j.at("outputLayer"));
 }
 
 Network& Network::operator=(const Network& n)
@@ -50,15 +66,29 @@ Network& Network::operator=(const Network& n)
         hiddenLayer2 = n.hiddenLayer2;
         outputLayer = n.outputLayer;
         victories = n.victories;
+        gamesPlayed = n.gamesPlayed;
     }
     return *this;
+}
+
+void Network::save(const std::string& filename)
+{
+    nlohmann::json j;
+    j["inputLayer"] = inputLayer.to_json();
+    j["hiddenLayer1"] = hiddenLayer1.to_json();
+    j["hiddenLayer2"] = hiddenLayer2.to_json();
+    j["outputLayer"] = outputLayer.to_json();
+
+    std::ofstream file(filename);
+    if (!file.is_open())
+        throw std::runtime_error("Impossible d'ouvrir le fichier pour sauvegarde");
+    file << j.dump(4); // dump(4) pour un JSON indenté
 }
 
 int Network::FeedForward(Board& board, Color iaColor)
 {
     int index = 0;
 
-    // Feed input values
     for (int row = 0; row < NB_ROW; row++)
     {    
         for (int col = 0; col < NB_COL; col++, index++)
@@ -74,13 +104,13 @@ int Network::FeedForward(Board& board, Color iaColor)
 
     if (DEBBUG)
     {
-    std::cout << "inputLayer: values=" << inputLayer.values.size() << std::endl;
-    std::cout << "hiddenLayer1: values=" << hiddenLayer1.values.size() 
-            << ", weights[0]=" << hiddenLayer1.weights[0].size() << std::endl;
-    std::cout << "hiddenLayer2: values=" << hiddenLayer2.values.size() 
-            << ", weights[0]=" << hiddenLayer2.weights[0].size() << std::endl;
-    std::cout << "outputLayer: values=" << outputLayer.values.size() 
-            << ", weights[0]=" << outputLayer.weights[0].size() << std::endl << std::endl;
+        std::cout << "inputLayer: values=" << inputLayer.values.size() << std::endl;
+        std::cout << "hiddenLayer1: values=" << hiddenLayer1.values.size() 
+                << ", weights[0]=" << hiddenLayer1.weights[0].size() << std::endl;
+        std::cout << "hiddenLayer2: values=" << hiddenLayer2.values.size() 
+                << ", weights[0]=" << hiddenLayer2.weights[0].size() << std::endl;
+        std::cout << "outputLayer: values=" << outputLayer.values.size() 
+                << ", weights[0]=" << outputLayer.weights[0].size() << std::endl << std::endl;
     }
 
     FeedForwardOne(inputLayer, hiddenLayer1);
@@ -101,4 +131,9 @@ int Network::FeedForward(Board& board, Color iaColor)
     }
 
     return selectedColumn;
+}
+
+float Network::getWinRate()
+{
+    return static_cast<float>(victories) / gamesPlayed;
 }

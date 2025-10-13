@@ -9,24 +9,39 @@
 using namespace std;
 
 
-int main() 
+int main(int argc, char *argv[]) 
 {
-    srand(time(nullptr));
-
-    Network best = trainer::train();
-
-    while (true)
+    if (argc != 2)
     {
-        Board b = Board();
-        int choice;
+        std::cout << "program needs parameters" << std::endl;
+        return 1;
+    }
 
-        while (!b.IsFull() && !b.IsFinished())
+    if (strcmp(argv[1], "train") == 0)
+    {
+        srand(time(nullptr));
+    
+        Network best = trainer::train();
+
+        best.save("bestTest.json");
+    }
+    if (strcmp(argv[0], "play") == 0)
+    {
+        Network AI = Network("BestTest.json");
+        while (true)
         {
-            b.MakeMove(best.FeedForward(b, YELLOW), YELLOW);
-            b.Print();
-            std::cin >> choice;
-            b.MakeMove(choice, RED);
-            b.Print();
+            Board b = Board();
+            int choice;
+
+            while (!b.IsFull() && !b.IsFinished())
+            {
+                b.MakeMove(AI.FeedForward(b, YELLOW), YELLOW);
+                b.Print();
+                std::cin >> choice;
+                b.MakeMove(choice, RED);
+                b.Print();
+            }
         }
     }
+    return 1;
 }
