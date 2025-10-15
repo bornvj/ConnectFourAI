@@ -1,5 +1,5 @@
+#include "../networkControl.h"
 #include "network.h"
-#include "networkControl.h"
 
 bool ShouldMutate(float mutateProb) // return if the number in [0; 1] < mutateProb
 {

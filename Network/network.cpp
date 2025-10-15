@@ -3,9 +3,8 @@
 #include <string>
 #include <fstream> 
 
+#include "../networkControl.h"
 #include "network.h"
-#include "networkControl.h"
-
 
 static float Activation(float value)
 {

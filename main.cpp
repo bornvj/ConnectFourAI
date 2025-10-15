@@ -3,8 +3,8 @@
 #include <cstdlib>
 #include <ctime> 
 
-#include "colors.h"
-#include "board.h"
+#include "Game/board.h"
+#include "Game/colors.h"
 #include "Network/network.h"
 #include "trainer.h"
 

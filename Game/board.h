@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-#include "Network/networkControl.h"
+#include "../networkControl.h"
 #include "colors.h"
 
 

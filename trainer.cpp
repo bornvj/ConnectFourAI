@@ -1,8 +1,10 @@
-#include "Network/networkControl.h"
-#include "Network/network.h"
-#include "board.h"
-#include "trainer.h"
 #include <algorithm>
+
+#include "Game/board.h"
+#include "Network/network.h"
+#include "networkControl.h"
+#include "trainer.h"
+
 
 Result fightNetworks(Network& n1, Network& n2)
 {

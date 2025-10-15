@@ -1,8 +1,10 @@
 #pragma once
+
 #include <vector>
 #include <nlohmann/json.hpp>
+
+#include "../Game/board.h"
 #include "neurone.h"
-#include "../board.h"
 #include "layer.h"
 
 class Network 

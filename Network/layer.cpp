@@ -1,7 +1,8 @@
 #include <iostream>
 
+#include "../networkControl.h"
 #include "layer.h"
-#include "networkControl.h"
+
 
 Layer::Layer(int prevLayerSize, int layerSize)
 {

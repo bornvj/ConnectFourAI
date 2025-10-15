@@ -5,7 +5,7 @@ JSON_INC = include
 
 TARGET = game
 
-SRCS = $(wildcard *.cpp) $(wildcard Network/*.cpp)
+SRCS = $(wildcard *.cpp) $(wildcard Network/*.cpp) $(wildcard Game/*.cpp)
 OBJS = $(SRCS:.cpp=.o)
 
 all: $(TARGET)
