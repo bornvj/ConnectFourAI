@@ -4,7 +4,7 @@
 #define NB_COL 7
 
 #define POPSIZE             400 
-#define NBRITERATIONS       2
+#define NBRITERATIONS       1000
 #define NBRBATTLES          25
 
 #define INPUTLAYERSIZE      (NB_COL * NB_ROW)
