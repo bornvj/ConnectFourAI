@@ -1,10 +1,9 @@
 #pragma once
 
 #include <iostream>
-#include "colors.h"
 
-#define NB_ROW 6
-#define NB_COL 7
+#include "Network/networkControl.h"
+#include "colors.h"
 
 
 class Board

@@ -4,7 +4,6 @@
 #include "neurone.h"
 #include "../board.h"
 #include "layer.h"
-#include "network.h"
 
 class Network 
 { 
@@ -26,6 +25,8 @@ class Network
         int FeedForward(Board& board, Color iaColor);
 
         float getWinRate();
+
+        void print();
 };
 
 namespace NetworkOperation

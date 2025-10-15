@@ -1,5 +1,8 @@
 #pragma once
 
+#define NB_ROW 6
+#define NB_COL 7
+
 #define POPSIZE             400 
 #define NBRITERATIONS       2
 #define NBRBATTLES          25

@@ -1,6 +1,6 @@
 #pragma once
 #include <vector>
-#include "network.h"
+#include <nlohmann/json.hpp>
 
 class Layer
 {

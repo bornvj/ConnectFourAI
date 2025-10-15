@@ -1,12 +1,12 @@
 #include <iostream>
 #include <vector>
 #include <cstdlib>
-#include <ctime>  
+#include <ctime> 
+
 #include "colors.h"
 #include "board.h"
 #include "Network/network.h"
 #include "trainer.h"
-using namespace std;
 
 
 int main(int argc, char *argv[]) 
@@ -23,11 +23,17 @@ int main(int argc, char *argv[])
     
         Network best = trainer::train();
 
-        best.save("bestTest.json");
+        best.save("bestNetwork.ntw");
+
+        return 0;
     }
-    if (strcmp(argv[0], "play") == 0)
+    if (strcmp(argv[1], "play") == 0)
     {
-        Network AI = Network("BestTest.json");
+        Network AI = Network("bestNetwork.ntw");
+        std::cout << "netword Loaded!" << std::endl;
+
+        AI.print();
+
         while (true)
         {
             Board b = Board();

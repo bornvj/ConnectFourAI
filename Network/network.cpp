@@ -102,17 +102,6 @@ int Network::FeedForward(Board& board, Color iaColor)
         }
     }
 
-    if (DEBBUG)
-    {
-        std::cout << "inputLayer: values=" << inputLayer.values.size() << std::endl;
-        std::cout << "hiddenLayer1: values=" << hiddenLayer1.values.size() 
-                << ", weights[0]=" << hiddenLayer1.weights[0].size() << std::endl;
-        std::cout << "hiddenLayer2: values=" << hiddenLayer2.values.size() 
-                << ", weights[0]=" << hiddenLayer2.weights[0].size() << std::endl;
-        std::cout << "outputLayer: values=" << outputLayer.values.size() 
-                << ", weights[0]=" << outputLayer.weights[0].size() << std::endl << std::endl;
-    }
-
     FeedForwardOne(inputLayer, hiddenLayer1);
     FeedForwardOne(hiddenLayer1, hiddenLayer2);
     FeedForwardOne(hiddenLayer2, outputLayer);
@@ -136,4 +125,18 @@ int Network::FeedForward(Board& board, Color iaColor)
 float Network::getWinRate()
 {
     return static_cast<float>(victories) / gamesPlayed;
+}
+
+void Network::print()
+{
+    std::cout << "inputlayerValueSize: "        << inputLayer.values.size() << std::endl;
+
+    std::cout << "hiddenlayer1WeightsSize: "    << hiddenLayer1.weights[0].size() << std::endl;
+    std::cout << "hiddenLayer1ValueSize: "      << hiddenLayer1.values.size() << std::endl;
+
+    std::cout << "hiddenlayer2WeightsSize: "    << hiddenLayer2.weights[0].size() << std::endl;
+    std::cout << "hiddenLayer2ValueSize: "      << hiddenLayer2.values.size() << std::endl;
+    
+    std::cout << "outputlayerWeightsSize: "     << outputLayer.weights[0].size() << std::endl;
+    std::cout << "outputLayerValueSize: "       << outputLayer.values.size() << std::endl;
 }

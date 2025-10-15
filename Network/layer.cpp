@@ -1,7 +1,7 @@
+#include <iostream>
+
 #include "layer.h"
-
-
-Layer::Layer() = default;
+#include "networkControl.h"
 
 Layer::Layer(int prevLayerSize, int layerSize)
 {
@@ -35,11 +35,12 @@ Layer::Layer(const Layer& layer) :
 }
 
 Layer::Layer(const nlohmann::json& j)
-{            
+{          
     for (const nlohmann::json& weight : j.at("weights"))
         weights.push_back(weight.get<std::vector<float>>());
 
     bias = j.at("bias").get<std::vector<float>>();
+    values.resize(bias.size() == 0? NB_COL * NB_ROW : bias.size()); // condition for input layer that have no bias
 }
 
 Layer& Layer::operator=(const Layer& other) 
@@ -59,4 +60,3 @@ nlohmann::json Layer::to_json()
     ret["bias"] = bias;
     return ret;
 }
-};

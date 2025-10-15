@@ -26,4 +26,7 @@ rebuild: clean all
 train: $(TARGET)
 	./$(TARGET) train
 
+play: $(TARGET)
+	./$(TARGET) play
+
 .PHONY: all clean rebuild run
